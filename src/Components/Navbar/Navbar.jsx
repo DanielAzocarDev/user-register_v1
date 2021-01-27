@@ -1,17 +1,13 @@
-import { useEffect } from 'react';
+import { useContext, useEffect} from 'react';
 import { Link, withRouter } from 'react-router-dom'
 import { auth } from '../../firebase.config';
+import { AuthContext } from '../../Context/AuthContext/AuthContext'
 
-const Navbar = ({ user, history }) => {
+const Navbar = ({ history }) => {
 
-  useEffect(() => {
-    if (user) {
-      console.log("user logged in")
-    } else {
-      console.log("user logged out")
-    }
-  }, [user])
+  const {isLoggedIn, getUser} = useContext(AuthContext)
 
+  // console.log(isLoggedIn)
   return (
     <nav className="w-screen h-12 bg-white text-green-500 shadow-md">
       <div className="container h-full flex justify-between items-center px-2 mx-auto">
@@ -23,7 +19,7 @@ const Navbar = ({ user, history }) => {
             </Link>
           </li>
 
-          {!user ? (
+          {!isLoggedIn ? (
             <>
               <li>
                 <Link to="/signup">
@@ -43,10 +39,11 @@ const Navbar = ({ user, history }) => {
                 <li>
                   <p to="/signin" onClick={() => {
                     auth.signOut()
+                    getUser(null)
                     history.push("/")
                   }}>
                     Sign Out
-                </p>
+                  </p>
                 </li>
               </>
             )}

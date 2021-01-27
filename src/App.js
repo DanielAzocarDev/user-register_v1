@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { auth } from './firebase.config'
+// import { auth } from './firebase.config'
 
 // Pages
 import SignUpPage from './Pages/SignUpPage/SignUpPage';
@@ -14,39 +14,29 @@ import Navbar from './Components/Navbar/Navbar';
 import './App.css';
 import Dashboard from './Pages/Dashboard/Dashboard';
 
+// context auth
+import AuthContextProvider from './Context/AuthContext/AuthContext';
+
 function App() {
-
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-
-    auth.onAuthStateChanged(user => {
-      if (user) {
-        setUser(user)
-        console.log("this is the user")
-      } else {
-        console.log("There is no active user")
-      }
-    })
-
-  }, [user])
-
-  console.log(user)
 
   return (
     <Router>
 
       <div className="">
-        <Navbar user={user} />
+        <AuthContextProvider>
+
+        <Navbar />
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/signup" component={SignUpPage} />
           <Route path="/signin" component={SignInPage} />
-          <Route path="/dashboard" component={() => <Dashboard user={user}/>} />
+          <Route path="/dashboard" component={Dashboard} />
 
           {/* <button onClick={() => auth.signOut()}> Sign Out</button> */}
           {/* user && <button onClick={() => auth.signOut()}> Sign Out</button> */}
         </Switch>
+        </AuthContextProvider>
+        
       </div>
 
     </Router>

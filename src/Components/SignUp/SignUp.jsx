@@ -1,8 +1,13 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { withRouter } from 'react-router-dom'
 
 import { auth } from '../../firebase.config';
 
-const SignUp = () => {
+import { AuthContext } from '../../Context/AuthContext/AuthContext'
+
+const SignUp = ({history}) => {
+
+  const {getUser,isLogged} = useContext(AuthContext)
 
   const [data, setData] = useState({});
 
@@ -20,18 +25,19 @@ const SignUp = () => {
     const { email, password } = data
 
     auth.createUserWithEmailAndPassword(email, password)
-  }
+      .then(res => {
 
-  // useEffect(() => {
-  //   auth.onAuthStateChanged(user => {
-  //     if (user) {
-  //       setUser(user)
-  //       console.log("this is the user", user)
-  //     } else {
-  //       console.log("There is no active user")
-  //     }
-  //   })
-  // }, [user])
+        const {user} = res
+        getUser(user)
+        isLogged(user)
+        
+        
+        history.push("/dashboard")
+      })
+      .catch(err => {
+        console.log(err.code, err.message)
+      })
+  }
 
   return (
     <form className="w-80 text-white bg-green-400 px-2 shadow-md" onSubmit={formSubmit}>
@@ -67,4 +73,4 @@ const SignUp = () => {
   );
 }
 
-export default SignUp;
+export default withRouter(SignUp);

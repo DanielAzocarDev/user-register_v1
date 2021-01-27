@@ -2,9 +2,8 @@ import profile from '../../img/profile.jpeg';
 
 import {auth} from '../../firebase.config';
 
-const Dashboard = ({user}) => {
+const Dashboard = () => {
 
-  console.log(user)
   return (
     <div className="w-screen h-screen grid gap-4 grid-cols-4 text-green-500 bg-gray-100 p-4">
       <div className="w-full bg-white">
