@@ -1,8 +1,12 @@
+import { useContext, useState } from 'react'
+
 import profile from '../../img/profile.jpeg';
 
-import {auth} from '../../firebase.config';
+import {AuthContext} from '../../Context/AuthContext/AuthContext';
 
 const Dashboard = () => {
+
+  const {user} = useContext(AuthContext)
 
   return (
     <div className="w-screen h-screen grid gap-4 grid-cols-4 text-green-500 bg-gray-100 p-4">
@@ -13,7 +17,8 @@ const Dashboard = () => {
         </div>
         <div className="px-2">
           <h2>Joe Doe</h2>
-          {/* <h2>{!user.displayName ? "Joe Doe" : user.email}</h2> */}
+          
+          {/* <h2 className="text-2xl font-bold">{!user.email ? "Joe Doe" : user.email}</h2> */}
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat voluptatibus quasi excepturi beatae. Optio totam delectus unde temporibus quis nam eveniet quos cumque non laborum est quaerat soluta, a reiciendis.</p>
         </div>
       </div>

@@ -3,9 +3,10 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 // import { auth } from './firebase.config'
 
 // Pages
+import Home from './Pages/Home/Home';
 import SignUpPage from './Pages/SignUpPage/SignUpPage';
 import SignInPage from './Pages/SignInPage/SignInPage';
-import Home from './Pages/Home/Home';
+import AddItemPage from './Pages/AddItemPage/AddItemPage';
 
 // Components
 import Navbar from './Components/Navbar/Navbar';
@@ -31,6 +32,7 @@ function App() {
           <Route path="/signup" component={SignUpPage} />
           <Route path="/signin" component={SignInPage} />
           <Route path="/dashboard" component={Dashboard} />
+          <Route path="/additem" component={AddItemPage} />
 
           {/* <button onClick={() => auth.signOut()}> Sign Out</button> */}
           {/* user && <button onClick={() => auth.signOut()}> Sign Out</button> */}

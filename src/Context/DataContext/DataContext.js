@@ -3,21 +3,15 @@ import { createContext,useState } from 'react';
 export const DataContext = createContext();
 
 const DataContextProvider = ({children}) => {
-  const [user, setUser] = useState(null)
-  const [isLoggedIn, setIsLoggedIn] = useState(true)
+  const [items, setItems] = useState([])
 
-  const getUser = (data) => {
-    setUser(data)
-    isLogged(data)
-  }
-
-  const isLogged = (data) =>{
-    data ? setIsLoggedIn(true) : setIsLoggedIn(false)
+  const addItem = (data) => {
+    setItems(...items, data)
   }
 
 
   return (
-    <DataContext.Provider value={{user, getUser, isLoggedIn, isLogged}}>
+    <DataContext.Provider value={{items, addItem}}>
       {children}
     </DataContext.Provider>
   )
