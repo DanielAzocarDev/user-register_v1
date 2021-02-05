@@ -17,6 +17,7 @@ import Dashboard from './Pages/Dashboard/Dashboard';
 
 // context auth
 import AuthContextProvider from './Context/AuthContext/AuthContext';
+import DataContextProvider from './Context/DataContext/DataContext';
 
 function App() {
 
@@ -24,21 +25,25 @@ function App() {
     <Router>
 
       <div className="">
-        <AuthContextProvider>
+        <DataContextProvider>
+          <AuthContextProvider>
 
-        <Navbar />
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/signup" component={SignUpPage} />
-          <Route path="/signin" component={SignInPage} />
-          <Route path="/dashboard" component={Dashboard} />
-          <Route path="/additem" component={AddItemPage} />
+            <Navbar />
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route path="/signup" component={SignUpPage} />
+              <Route path="/signin" component={SignInPage} />
+              <Route path="/dashboard" component={Dashboard} />
+              <Route path="/additem" component={AddItemPage} />
 
-          {/* <button onClick={() => auth.signOut()}> Sign Out</button> */}
-          {/* user && <button onClick={() => auth.signOut()}> Sign Out</button> */}
-        </Switch>
-        </AuthContextProvider>
-        
+              {/* <button onClick={() => auth.signOut()}> Sign Out</button> */}
+              {/* user && <button onClick={() => auth.signOut()}> Sign Out</button> */}
+            </Switch>
+
+          </AuthContextProvider>
+        </DataContextProvider>
+
+
       </div>
 
     </Router>

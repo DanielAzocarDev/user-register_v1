@@ -3,17 +3,18 @@ import { Link, withRouter } from 'react-router-dom'
 import { auth } from '../../firebase.config';
 import { AuthContext } from '../../Context/AuthContext/AuthContext'
 
-const Navbar = ({ history }) => {
+const Navbar = (props) => {
 
-  const {isLoggedIn, getUser} = useContext(AuthContext)
-  
+  const { getUser, user } = useContext(AuthContext)
+
+  console.log(props)
   return (
     <nav className="w-screen h-12 bg-white text-green-500 shadow-md">
       <div className="container h-full flex justify-between items-center px-2 mx-auto">
         <h2 className="font-bold">Menu</h2>
         <ul className=" w-48 flex justify-between">
-          
-          {!isLoggedIn ? (
+
+          {!user ? (
             <>
               <li>
                 <Link to="/">
@@ -40,16 +41,19 @@ const Navbar = ({ history }) => {
                     Dashboard
                   </Link>
                 </li>
-                <li>
-                  <Link to="/additem">
-                    Add
-                  </Link>
-                </li>
+                {props.location.pathname === "/additem" ? null : (
+                  <li>
+                    <Link to="/additem">
+                      Add
+                    </Link>
+                  </li>
+                )}
                 <li>
                   <p to="/signin" onClick={() => {
                     auth.signOut()
                     getUser(null)
-                    history.push("/")
+                    localStorage.clear()
+                    props.history.push("/")
                   }}>
                     Sign Out
                   </p>
