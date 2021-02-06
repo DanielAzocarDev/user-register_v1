@@ -16,6 +16,21 @@ const DataContextProvider = ({ children }) => {
     // console.log(userId, "user id from DataContext")
   }
 
+  const deleteItem = (userId, item) => {
+
+    // firestore.doc(`/users/${userId}/`).collection('stock').doc(item.id).delete().then(() => {
+    //   console.log(`Document ${item.title}  successfully deleted!`);
+    // }).catch((error) => {
+    //   console.error("Error removing document: ", error);
+    // });
+    // firestore.doc(`/users/${userId}/`).collection('stock').where("id", "==", item.id).get()
+    //   .then(querySnapshot => querySnapshot.docs[0].ref.delete())
+
+    const collRef = firestore.doc(`/users/${userId}/`).collection('stock')
+
+    collRef.doc(item.id).delete()
+  }
+
   const getInventory = (userId) => {
     // console.log(`this is the inventory of ${userId}`)
     const collRef = firestore.doc(`/users/${userId}/`).collection('stock')
@@ -39,7 +54,7 @@ const DataContextProvider = ({ children }) => {
   }
 
   return (
-    <DataContext.Provider value={{ items, addItem, getInventory }}>
+    <DataContext.Provider value={{ items, addItem, deleteItem, getInventory }}>
       {children}
     </DataContext.Provider>
   )
