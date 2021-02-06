@@ -8,7 +8,7 @@ import { AuthContext } from '../../Context/AuthContext/AuthContext'
 
 const SignInPage = ({ history }) => {
 
-  const { getUser, isLogged } = useContext(AuthContext)
+  const { getUser } = useContext(AuthContext)
 
   const signInWithEmailPassword = (data) => {
     const { email, password } = data
@@ -19,11 +19,15 @@ const SignInPage = ({ history }) => {
         const user = res.user;
 
         getUser(user)
-        isLogged(user)
 
         console.log(`the user ${user.email} has logged in`);
 
         history.push("/dashboard")
+      })
+      .catch(error => {
+        console.log(error.message, error.code)
+
+        error.code === "auth/wrong-password" && console.log("Usuario o Contraseña incorrectos!!!❌❌❌")
       })
   };
 

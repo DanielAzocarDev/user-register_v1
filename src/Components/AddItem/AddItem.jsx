@@ -1,10 +1,13 @@
 import { useState, useContext } from 'react';
+import { v4 as uuid } from 'uuid'
 
 import { DataContext } from '../../Context/DataContext/DataContext';
+import { AuthContext } from '../../Context/AuthContext/AuthContext';
 
-const AddItem = () => {
+const AddItem = ({ history }) => {
 
-  const { items, addItem } = useContext(DataContext)
+  const { addItem } = useContext(DataContext)
+  const { user } = useContext(AuthContext)
 
   const [data, setData] = useState({
     title: "",
@@ -19,7 +22,8 @@ const AddItem = () => {
 
     setData({
       ...data,
-      [name]: value
+      [name]: value,
+      id: uuid(),
     })
     // console.log(data)
   }
@@ -27,8 +31,9 @@ const AddItem = () => {
   const formSubmit = (e) => {
     e.preventDefault()
 
-    const userId = JSON.parse(localStorage.getItem("user")).uid
+    const userId = user.uid
     addItem(userId, data)
+    // addItem(userId)
     // console.log(userId)
     setData({
       title: "",
@@ -36,13 +41,15 @@ const AddItem = () => {
       cost: "",
       quantity: "",
     })
+
+    history.push("/dashboard")
   }
 
-  console.log(items)
+  // console.log(items)
 
   return (
     <form className="w-80 text-white bg-green-400 px-2 shadow-md" onSubmit={formSubmit}>
-      <h2 className="text-center text-2xl font-black m-7">Create Your User!</h2>
+      <h2 className="text-center text-2xl font-black m-7">Add Your Products!!</h2>
       <div className=" pb-6 ">
         <label className="block" htmlFor="title">Title</label>
         <input className=" w-full text-black px-2" type="text" name="title" id="title" value={data.title} onChange={formChange} />

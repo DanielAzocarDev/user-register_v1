@@ -18,7 +18,7 @@ const AuthContextProvider = ({ children }) => {
       console.log(authUser)
       setUser(authUser)
     })
-  }, [])
+  }, [user])
 
   const getUser = (data) => {
 
